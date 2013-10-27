@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/openhoat/profess.png?branch=master)](https://travis-ci.org/openhoat/hw-util)
+[![Build Status](https://travis-ci.org/openhoat/hw-util.png?branch=master)](https://travis-ci.org/openhoat/hw-util)
 
 ## What's hw-util?
 

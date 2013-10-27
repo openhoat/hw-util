@@ -1,0 +1,35 @@
+{
+  "name": "hw-util",
+  "version": "0.0.1",
+  "description": "A useful extension of util module",
+  "main": "lib/hw-util",
+  "author": {
+    "name": "Olivier Penhoat",
+    "email": "openhoat@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/openhoat/hw-util.git"
+  },
+  "bugs": {
+    "url": "https://github.com/openhoat/hw-util/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/openhoat/hw-util/blob/master/LICENSE"
+    }
+  ],
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "jasmine-node spec"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-jasmine-node": "~0.1.0"
+  }
+}

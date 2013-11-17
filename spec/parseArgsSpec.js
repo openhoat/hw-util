@@ -90,4 +90,20 @@ describe('parse optional function args', function () {
       }));
     })('b', [3, 4, 5]);
   });
+  it('should return 3 args', function () {
+    (function () {
+      var result;
+      result = util.parseArgs(arguments, [
+        { name: 's1', optional: false, type: 'string' },
+        { name: 's2', optional: true, type: 'string', defaultValue: 'z' },
+        { name: 'a', optional: false, type: 'object', objectType: Array }
+      ]);
+      expect(result).toBeTruthy();
+      expect(JSON.stringify(result)).toBe(JSON.stringify({
+        s1: 'b',
+        a: [ 3, 4, 5 ],
+        s2: 'z'
+      }));
+    })('b', [3, 4, 5]);
+  });
 });

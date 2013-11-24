@@ -12,7 +12,7 @@ describe('copy properties', function () {
       'hits': 2,
       'createdAt': '2013-11-16T16:26:48.505Z'
     };
-    dest = util.copyProperties(src, null, false, ['__v'], { '_id': 'id' });
+    dest = util.copyProperties(src, null, false, ['__v'], null, { '_id': 'id' });
     expect(dest).toBeTruthy();
     expect(JSON.stringify(dest)).toBe(JSON.stringify({
       'id': '52879cc8ceee8cad15000001',

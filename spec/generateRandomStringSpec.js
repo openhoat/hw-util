@@ -1,13 +1,14 @@
-var util = require('../lib/hw-util');
+var chai = require('chai')
+  , expect = chai.expect
+  , util = require('../lib/hw-util');
 
 function checkGeneratedRandomString(length, filter, checkRegexp, loop) {
   var i, result;
   loop = loop || 1;
   for (i = 0; i < loop; i++) {
     result = util.generateRandomString(length, filter);
-    expect(result).toBeTruthy();
-    expect(result.length).toBe(length);
-    expect(result.match(new RegExp(util.format('%s{%s}', checkRegexp, length), 'g'))).toBeTruthy();
+    expect(result.length).to.equal(length);
+    expect(result.match(new RegExp(util.format('%s{%s}', checkRegexp, length), 'g'))).ok;
   }
 }
 

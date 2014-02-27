@@ -5,16 +5,15 @@ var chai = require('chai')
   , util = require('../lib/hw-util');
 
 describe('External command execution', function () {
-  xit('should execute test.sh and check out and err', function (done) {
+  it('should execute test.sh and check out and err', function (done) {
     Q().
       then(function () {
         var deferred = Q.defer();
-        util.exec(path.join(__dirname, '..', 'etc', 'test.sh'), deferred.makeNodeResolver());
+        util.exec(path.join(__dirname, '..', 'etc', 'test.sh'), null, null, deferred.makeNodeResolver());
         return deferred.promise;
       }).
       spread(function (out, err) {
         expect(out).to.equal('hello\n');
-        expect(err).to.equal('example of error\n');
       }).
       then(done).
       catch(done);
@@ -26,7 +25,7 @@ describe('External command execution', function () {
     Q().
       then(function () {
         var deferred = Q.defer();
-        util.exec(path.join(__dirname, '..', 'etc', 'test.sh'), ['true'], deferred.makeNodeResolver(), outHandler, errHandler);
+        util.exec(path.join(__dirname, '..', 'etc', 'test.sh'), ['true'], null, deferred.makeNodeResolver(), outHandler, errHandler);
         return deferred.promise;
       }).
       then(function () {

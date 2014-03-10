@@ -24,4 +24,10 @@ describe('copy properties', function () {
       'createdAt': '2013-11-16T16:26:48.505Z'
     });
   });
+  it('should add properties to object', function () {
+    var src = { a: { b: 1, c: 2 } }
+      , dest = { a: { d: 3 } };
+    util.copyProperties(src, dest, false);
+    expect(dest).to.eql({ a: { b: 1, c: 2, d: 3 } });
+  });
 });

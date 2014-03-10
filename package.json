@@ -1,6 +1,6 @@
 {
   "name": "hw-util",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A useful extension of util module",
   "main": "lib/hw-util",
   "author": {

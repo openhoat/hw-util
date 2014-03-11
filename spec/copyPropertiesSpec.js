@@ -30,4 +30,14 @@ describe('copy properties', function () {
     util.copyProperties(src, dest, false);
     expect(dest).to.eql({ a: { b: 1, c: 2, d: 3 } });
   });
+  it('should copy complex object', function () {
+    var src = { a: 1, stream: process.stdout, c: 3 }
+      , dest = { b: 2, c: 4 };
+    util.copyProperties(src, dest, false);
+    expect(dest).to.be.ok;
+    expect(dest.a).to.equal(1);
+    expect(dest.b).to.equal(2);
+    expect(dest.c).to.equal(3);
+    expect(dest.stream).to.equal(process.stdout);
+  });
 });

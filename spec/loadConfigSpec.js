@@ -14,14 +14,26 @@ describe('loadConfig', function () {
       defaultConfig: null
     };
     config = util.loadConfig(options);
-    expect(config).to.eql({
-      a: 11,
-      b: 2,
-      c: { d: true, e: 'ee' },
-      f: [ 1, 2, 3 ],
-      g: './gpath',
-      baseDir: '/home/openhoat/dev/nodejs/hw-util/spec'
-    });
+    if (config.env === 'production') {
+      expect(config).to.eql({
+        a: 11,
+        b: 2,
+        c: { d: true, e: 'eee' },
+        f: [ 1, 2, 3 ],
+        g: './gpath',
+        baseDir: __dirname,
+        env: 'production'
+      });
+    } else {
+      expect(config).to.eql({
+        a: 11,
+        b: 2,
+        c: { d: true, e: 'ee' },
+        f: [ 1, 2, 3 ],
+        g: './gpath',
+        baseDir: __dirname
+      });
+    }
   });
   it('should return a configuration object based on configuration files with complex object', function () {
     var defaultConfig = require('./config/default')
@@ -39,7 +51,7 @@ describe('loadConfig', function () {
     expect(config).to.be.ok;
     expect(config.a).to.equal(11);
     expect(config.b).to.equal(2);
-    expect(config.c).to.eql({d: true, e: 'ee'});
+    expect(config.c).to.eql({d: true, e: config.env === 'production' ? 'eee' : 'ee'});
     expect(config.f).to.eql([ 1, 2, 3 ]);
     expect(config.g).to.equal('./gpath');
     expect(config.baseDir).to.equal(__dirname);

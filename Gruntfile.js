@@ -17,7 +17,8 @@ module.exports = function (grunt) {
         force: true
       },
       all: [
-        'lib/**/*.js'
+        'lib/**/*.js',
+        'spec/**/*.js'
       ]
     },
     mochaTest: {
@@ -26,6 +27,11 @@ module.exports = function (grunt) {
           reporter: 'spec'
         },
         src: ['spec/**/*Spec.js']
+      }
+    },
+    exec: {
+      coverage: {
+        command: './node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec -t 5000 spec/**/*.js'
       }
     }
   };
@@ -36,12 +42,11 @@ module.exports = function (grunt) {
     gruntConfig.mochaTest.test.options.quiet = true;
     process.env.XUNIT_FILE = 'dist/reports/xunit.xml';
   }
+  require('load-grunt-tasks')(grunt);
+  require('time-grunt')(grunt);
   grunt.initConfig(gruntConfig);
-  grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-mkdir');
-  grunt.loadNpmTasks('grunt-mocha-test');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.registerTask('verify', ['mkdir', 'jshint']);
   grunt.registerTask('test', ['mkdir', 'mochaTest']);
+  grunt.registerTask('cover', ['mkdir', 'exec:coverage']);
   grunt.registerTask('default', ['verify', 'test']);
 };

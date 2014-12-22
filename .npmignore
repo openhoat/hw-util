@@ -1,5 +1,7 @@
 .idea
 bin
 dist
-etc
 spec
+Gruntfile.js
+jshint.json
+.istanbul.yml

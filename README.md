@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/openhoat/hw-util.png?branch=master)](https://travis-ci.org/openhoat/hw-util)
+[![Build Status](https://travis-ci.org/openhoat/hw-util.png?branch=develop)](https://travis-ci.org/openhoat/hw-util)
 [![NPM version](https://badge.fury.io/js/hw-util.svg)](http://badge.fury.io/js/hw-util)
 
 ## What's hw-util?

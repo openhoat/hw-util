@@ -133,48 +133,4 @@ describe('util', function () {
     });
   });
 
-  xdescribe('fetchMailbox', function () {
-    it('should fetch mailbox', function (done) { // A utiliser ponctuelement pour tester le polling imap
-      var opt = {
-        imap: {
-          host: 'imap.laposte.io',
-          port: 143,
-          tls: false,
-          user: 'digiposte',
-          password: 'Xiwg3WXcQf1Kb1',
-          authTimeout: 20000
-        }, criteria: {
-          unseen: true,
-          from: 'no-reply@fullsix.com',
-          subject: "Activation d'une nouvelle adresse e-mail",
-          linkFilter: '"([\\w:/\\.-]+\/utilisateur\/activation[\\w:/\\.]+)"'
-        }
-      };
-      util
-        .retryIfNoResult({
-          try: function () {
-            return util.fetchMailbox(opt);
-          },
-          check: function (emails) {
-            var i, email, matches;
-            console.log('emails :', emails);
-            for (i = 0; !matches && i < emails.length; i++) {
-              email = emails[i];
-              matches = util.findInEmailBody({
-                body: email.body,
-                filter: '(")([\\w:/\\.-]+\/utilisateur\/activation[\\w:/\\.]+)(")'
-              });
-            }
-            console.log('matches :', matches);
-            return matches[2];
-          },
-          wait: 1000
-        })
-        .then(function (/*link*/) {
-          // TODO
-          console.log('args :', arguments);
-        })
-        .then(done, done);
-    });
-  });
 });

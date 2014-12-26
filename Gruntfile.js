@@ -13,10 +13,11 @@ module.exports = function (grunt) {
     },
     jshint: {
       options: {
-        jshintrc: 'jshint.json',
-        force: true
+        reporter: require('jshint-stylish'),
+        force: true,
+        jshintrc: 'jshint.json'
       },
-      all: [
+      src: [
         'lib/**/*.js',
         'spec/**/*.js'
       ]

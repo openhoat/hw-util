@@ -36,7 +36,7 @@ module.exports = function (grunt) {
       }
     }
   };
-  if (grunt.option('ci')) {
+  if (process.env.JENKINS_URL) {
     gruntConfig.jshint.options.reporter = 'checkstyle';
     gruntConfig.jshint.options.reporterOutput = 'dist/reports/jshint_checkstyle.xml';
     gruntConfig.mochaTest.test.options.reporter = 'xunit-file';

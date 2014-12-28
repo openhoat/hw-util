@@ -1,4 +1,5 @@
-var chai = require('chai')
+var path = require('path')
+  , chai = require('chai')
   , expect = chai.expect
   , should = chai.should()
   , util = require('../lib/hw-util');
@@ -130,6 +131,85 @@ describe('util', function () {
         c: {d: 5, e: 'ee'},
         f: f, g: 'g'
       });
+    });
+  });
+
+  xdescribe('sendMail', function () {
+
+    this.timeout(10000);
+
+    it('should send an email', function () {
+      var options = {
+        transport: {
+          host: process.env.HW_UTIL_SMTP_HOST,
+          port: 25,
+          secure: false,
+          auth: {
+            user: process.env.HW_UTIL_SMTP_USER,
+            pass: process.env.HW_UTIL_SMTP_PASSWORD
+          },
+          authMethod: 'PLAIN',
+          ignoreTLS: true,
+          // localAddress ,
+          // connectionTimeout,
+          // greetingTimeout,
+          // socketTimeout,
+          // tls,
+          // debug
+          name: 'webbot'
+        },
+        mail: {
+          from: process.env.HW_UTIL_MAIL_FROM,
+          to: process.env.HW_UTIL_MAIL_TO,
+          subject: 'Hello',
+          text: 'Hello world',
+          html: '<b>Hello world</b>'
+        }
+      };
+      return util.sendMail(options)
+        .then(function (info) {
+          expect(info).to.be.ok;
+          expect(info).to.have.property('accepted');
+          info.accepted.should.be.an.array;//[process.env.HW_UTIL_MAIL_TO]);
+          expect(info).to.have.property('rejected');
+          info.rejected.should.be.an.array;
+          info.rejected.should.be.empty;
+          expect(info).to.have.property('response');
+          expect(info).to.have.property('envelope');
+          expect(info.envelope).to.have.property('from');
+          info.envelope.from.should.be.an.array;
+          expect(info.envelope).to.have.property('to');
+          info.envelope.to.should.be.an.array;
+          info.envelope.to.should.have.length(1);
+          info.envelope.to[0].should.equal(process.env.HW_UTIL_MAIL_TO);
+          expect(info).to.have.property('messageId');
+        });
+    });
+  });
+
+  xdescribe('uploadFtp', function () {
+
+    this.timeout(10000);
+
+    it('should send a file via ftp', function () {
+      var options = {
+        server: {
+          host: process.env.HW_UTIL_FTP_HOST,
+          port: process.env.HW_UTIL_FTP_PORT || 21,
+          secure: false,
+          secureOptions: null,
+          // connTimeout,
+          // pasvTimeout,
+          // keepalive,
+          user: process.env.HW_UTIL_FTP_USER,
+          password: process.env.HW_UTIL_FTP_PASSWORD
+        },
+        file: {
+          input: path.join(__dirname, 'hello.txt'),
+          destPath: 'hello.txt'
+        }
+      };
+      return util.uploadFtp(options);
     });
   });
 

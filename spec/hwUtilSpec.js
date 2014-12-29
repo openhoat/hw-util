@@ -163,7 +163,13 @@ describe('util', function () {
           to: process.env.HW_UTIL_MAIL_TO,
           subject: 'Hello',
           text: 'Hello world',
-          html: '<b>Hello world</b>'
+          html: '<b>Hello world</b>',
+          attachments: [ // https://github.com/andris9/Nodemailer#attachments
+            {   // utf-8 string as an attachment
+              filename: 'hello.txt',
+              path: path.join(__dirname, 'hello.txt')
+            }
+          ]
         }
       };
       return util.sendMail(options)

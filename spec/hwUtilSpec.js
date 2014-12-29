@@ -219,7 +219,7 @@ describe('util', function () {
     });
   });
 
-  describe('simple http server', function () {
+  describe.only('simple http server', function () {
     var serverPort = 3999, testHttpServer;
 
     before(function () {
@@ -230,10 +230,8 @@ describe('util', function () {
         });
     });
 
-    after(function (done) {
-      util
-        .stopHttpServer({httpServer: testHttpServer})
-        .then(done, done);
+    after(function () {
+      return util.stopHttpServer({httpServer: testHttpServer});
     });
 
     it('should get an echo web page', function (done) {

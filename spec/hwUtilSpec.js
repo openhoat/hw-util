@@ -3,7 +3,7 @@ var path = require('path')
   , expect = chai.expect
   , should = chai.should()
   , util = require('../lib/hw-util');
-//  , log = util.logFactory('hwUtilSpec');
+  // , log = util.logFactory('hwUtilSpec');
 
 describe('util', function () {
 
@@ -216,6 +216,43 @@ describe('util', function () {
         }
       };
       return util.uploadFtp(options);
+    });
+  });
+
+  describe('simple http server', function () {
+    var serverPort = 3999, testHttpServer;
+
+    before(function () {
+      return util
+        .startHttpServer({port: serverPort})
+        .then(function (httpServer) {
+          testHttpServer = httpServer;
+        });
+    });
+
+    after(function (done) {
+      util
+        .stopHttpServer({httpServer: testHttpServer})
+        .then(done, done);
+    });
+
+    it('should get an echo web page', function (done) {
+      var http = require('http');
+      http.get(util.format('http://localhost:%s/hello', serverPort), function (res) {
+        var body = '';
+        expect(res).to.be.ok;
+        expect(res).to.have.property('statusCode', 200);
+        res.setEncoding('utf8');
+        res.on('data', function (chunk) {
+          body += body + chunk;
+        });
+        res.on('end', function () {
+          expect(body).to.equal(util.format('<html><head><title>Http Server</title></head><body><h1>Path</h1><h2>%s</h2></body></html>', '/hello'));
+          done();
+        });
+      }).on('error', function (err) {
+        done(err);
+      });
     });
   });
 
